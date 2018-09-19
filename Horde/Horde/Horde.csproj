@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Tests\obj\Debug\netcoreapp2.1\Tests.AssemblyInfo.cs" />
+    <Compile Remove="Tests\UnitTest1.cs" />
+    <Compile Remove="Tests\Tests.cs" />
+    <Compile Remove="Tests\obj\Debug\netcoreapp2.1\Tests.AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Tests\obj\project.assets.json" />
+    <None Remove="Tests\obj\Debug\netcoreapp2.1\Tests.assets.cache" />
+    <None Remove="Tests\obj\Tests.csproj.nuget.g.props" />
+    <None Remove="Tests\obj\Tests.csproj.nuget.g.targets" />
+    <None Remove="Tests\obj\Tests.csproj.nuget.cache" />
+    <None Remove="Tests\obj\Debug\netcoreapp2.1\Tests.csprojAssemblyReference.cache" />
+    <None Remove="Tests\obj\Tests.csproj.nuget.cache" />
+    <None Remove="Tests\obj\Debug\netcoreapp2.1\Tests.AssemblyInfoInputs.cache" />
+  </ItemGroup>
+</Project>
