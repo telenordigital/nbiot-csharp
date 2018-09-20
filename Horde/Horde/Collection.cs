@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace Horde
 {
@@ -21,5 +22,33 @@ namespace Horde
     {
         [DataMember(Name = "collections")]
         public Collection[] Collections;
+    }
+
+    public partial class Client
+    {
+        public Task<Collection> GetCollection(string id)
+        {
+            return get<Collection>("/collections/" + id);
+        }
+
+        public async Task<Collection[]> GetCollections()
+        {
+            return (await get<CollectionList>("/collections")).Collections;
+        }
+
+        public Task<Collection> CreateCollection(Collection collection)
+        {
+            return create("/collections", collection);
+        }
+
+        public Task<Collection> UpdateCollection(Collection collection)
+        {
+            return update("/collections/" + collection.ID, collection);
+        }
+
+        public Task DeleteCollection(string id)
+        {
+            return delete("/collections/" + id);
+        }
     }
 }

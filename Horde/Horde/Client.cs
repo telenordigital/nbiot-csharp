@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Horde
 {
-    public class Client
+    public partial class Client
     {
         string addr;
         string token;
@@ -41,85 +40,6 @@ namespace Horde
             }
             throw new ClientException(resp.StatusCode, await resp.Content.ReadAsStringAsync());
         }
-
-
-        public Task<Team> GetTeam(string id)
-        {
-            return get<Team>("/teams/" + id);
-        }
-
-        public async Task<Team[]> GetTeams()
-        {
-            return (await get<TeamList>("/teams")).Teams;
-        }
-
-        public Task<Team> CreateTeam(Team team)
-        {
-            return create("/teams", team);
-        }
-
-        public Task<Team> UpdateTeam(Team team)
-        {
-            return update("/teams/" + team.ID, team);
-        }
-
-        public Task DeleteTeam(string id)
-        {
-            return delete("/teams/" + id);
-        }
-
-
-        public Task<Collection> GetCollection(string id)
-        {
-            return get<Collection>("/collections/" + id);
-        }
-
-        public async Task<Collection[]> GetCollections()
-        {
-            return (await get<CollectionList>("/collections")).Collections;
-        }
-
-        public Task<Collection> CreateCollection(Collection collection)
-        {
-            return create("/collections", collection);
-        }
-
-        public Task<Collection> UpdateCollection(Collection collection)
-        {
-            return update("/collections/" + collection.ID, collection);
-        }
-
-        public Task DeleteCollection(string id)
-        {
-            return delete("/collections/" + id);
-        }
-
-
-        public Task<Device> GetDevice(string collectionID, string deviceID)
-        {
-            return get<Device>($"/collections/{collectionID}/devices/{deviceID}");
-        }
-
-        public async Task<Device[]> GetDevices(string collectionID)
-        {
-            return (await get<DeviceList>($"/collections/{collectionID}/devices")).Devices;
-        }
-
-        public Task<Device> CreateDevice(string collectionID, Device device)
-        {
-            return create($"/collections/{collectionID}/devices", device);
-        }
-
-        public Task<Device> UpdateDevice(string collectionID, Device device)
-        {
-            return update($"/collections/{collectionID}/devices/{device.ID}", device);
-        }
-
-        public Task DeleteDevice(string collectionID, string deviceID)
-        {
-            return delete($"/collections/{collectionID}/devices/{deviceID}");
-        }
-
 
         Task<T> get<T>(string path)
             where T : struct

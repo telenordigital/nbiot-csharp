@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Horde;
 using Xunit;
 
@@ -27,7 +28,7 @@ namespace Tests
 
             var tagKey = "test key";
             var tagValue = "test value";
-            team.Tags = new System.Collections.Generic.Dictionary<string, string>();
+            team.Tags = new Dictionary<string, string>();
             team.Tags[tagKey] = tagValue;
             team = await client.UpdateTeam(team);
             Assert.NotNull(team.Tags);
@@ -57,7 +58,7 @@ namespace Tests
 
             var tagKey = "test key";
             var tagValue = "test value";
-            collection.Tags = new System.Collections.Generic.Dictionary<string, string>();
+            collection.Tags = new Dictionary<string, string>();
             collection.Tags[tagKey] = tagValue;
             collection = await client.UpdateCollection(collection);
             Assert.NotNull(collection.Tags);
@@ -93,7 +94,7 @@ namespace Tests
             var tagValue = "test value";
             device.IMEI = imei;
             device.IMSI = imsi;
-            device.Tags = new System.Collections.Generic.Dictionary<string, string>();
+            device.Tags = new Dictionary<string, string>();
             device.Tags[tagKey] = tagValue;
             device = await client.UpdateDevice(collection.ID, device);
             Assert.NotNull(device.Tags);

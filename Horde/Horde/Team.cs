@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace Horde
 {
@@ -31,5 +32,33 @@ namespace Horde
 
         [DataMember(Name = "role")]
         public string Role;
+    }
+
+    public partial class Client
+    {
+        public Task<Team> GetTeam(string id)
+        {
+            return get<Team>("/teams/" + id);
+        }
+
+        public async Task<Team[]> GetTeams()
+        {
+            return (await get<TeamList>("/teams")).Teams;
+        }
+
+        public Task<Team> CreateTeam(Team team)
+        {
+            return create("/teams", team);
+        }
+
+        public Task<Team> UpdateTeam(Team team)
+        {
+            return update("/teams/" + team.ID, team);
+        }
+
+        public Task DeleteTeam(string id)
+        {
+            return delete("/teams/" + id);
+        }
     }
 }
