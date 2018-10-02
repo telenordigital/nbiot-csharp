@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 
-namespace Horde
+namespace NBIoT
 {
     public partial class Client
     {
@@ -31,6 +31,7 @@ namespace Horde
         async void ping()
         {
             var req = new HttpRequestMessage(HttpMethod.Get, addr + "/");
+            req.Headers.Add("X-API-Token", token);
             var resp = await client.SendAsync(req);
             if (resp.IsSuccessStatusCode || resp.StatusCode == HttpStatusCode.Forbidden)
             {
@@ -71,6 +72,7 @@ namespace Horde
             var serializer = new DataContractJsonSerializer(typeof(T), settings);
 
             var req = new HttpRequestMessage(method, path);
+            req.Headers.Add("X-API-Token", token);
             if (x != null)
             {
                 var stream1 = new MemoryStream();

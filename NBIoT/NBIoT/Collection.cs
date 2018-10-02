@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
-namespace Horde
+namespace NBIoT
 {
     [DataContract]
     public struct Collection

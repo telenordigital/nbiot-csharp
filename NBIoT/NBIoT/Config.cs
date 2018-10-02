@@ -1,16 +1,17 @@
 ﻿using System;
 using System.IO;
 
-namespace Horde
+namespace NBIoT
 {
     public static class Config
     {
-        public const string DefaultFileName = ".horde";
+        public const string DefaultFileName = ".telenor-nbiot";
         public const string DefaultAddress = "https://api.nbiot.engineering";
 
         internal static (string addr, string token) addressTokenFromConfig(string fileName)
         {
             (var addr, var token) = readConfig(fileName);
+            // TODO: override with env vars
             return (addr, token);
         }
 
@@ -22,7 +23,7 @@ namespace Horde
             var path = Path.Combine(home(), fileName);
             if (!File.Exists(path))
             {
-                throw new FileNotFoundException($"Horde config file {path} not found.");
+                throw new FileNotFoundException($"Telenor NB-IoT config file {path} not found.");
             }
 
             var lines = File.ReadAllLines(path);

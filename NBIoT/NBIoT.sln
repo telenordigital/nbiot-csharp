@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horde", "Horde\Horde.csproj", "{497D87A4-D735-4094-9056-1A6AB9808E9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBIoT", "NBIoT\NBIoT.csproj", "{497D87A4-D735-4094-9056-1A6AB9808E9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{9D5E02C5-E630-467E-A18D-334CF2074B45}"
 EndProject
