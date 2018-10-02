@@ -11,7 +11,16 @@ namespace NBIoT
         internal static (string addr, string token) addressTokenFromConfig(string fileName)
         {
             (var addr, var token) = readConfig(fileName);
-            // TODO: override with env vars
+            var addrEnv = Environment.GetEnvironmentVariable("TELENOR_NBIOT_ADDR");
+            if (addrEnv != null)
+            {
+                addr = addrEnv;
+            }
+            var tokenEnv = Environment.GetEnvironmentVariable("TELENOR_NBIOT_TOKEN");
+            if (tokenEnv != null)
+            {
+                token = tokenEnv;
+            }
             return (addr, token);
         }
 
