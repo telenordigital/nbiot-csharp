@@ -112,5 +112,31 @@ namespace Tests
 
             await client.DeleteCollection(collection.ID);
         }
+
+        [Fact]
+        public async void TestOutputs()
+        {
+            var client = new Client();
+
+            var collection = await client.CreateCollection(new Collection());
+
+            var outputs = await client.GetOutputs(collection.ID);
+            Assert.Empty(outputs);
+
+            var output = (IFTTTOutput)await client.CreateOutput(collection.ID, new IFTTTOutput { Key = "abc", EventName = "def" });
+            outputs = await client.GetOutputs(collection.ID);
+            Assert.Single(outputs);
+            Assert.Equal(output, outputs[0]);
+
+            var output2 = (IFTTTOutput)await client.GetOutput(collection.ID, output.ID);
+            Assert.Equal(output.ID, output2.ID);
+
+            await client.DeleteOutput(collection.ID, output.ID);
+
+            outputs = await client.GetOutputs(collection.ID);
+            Assert.Empty(outputs);
+
+            await client.DeleteCollection(collection.ID);
+        }
     }
 }
