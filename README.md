@@ -27,3 +27,20 @@ accepts the address and token directly.
 
 Support for receiving device-sent data via WebSockets is not yet implemented.
 We are open to recommendations for functioning cross-platform WebSocket libraries.
+
+## Deployment
+
+To build and release the package to NuGet, you will need the .NET Core SDK, which includes the `dotnet` CLI.
+
+You will also need to create/regenerate an API key using our nuget.org account.
+
+Run the following commands:
+
+```bash
+dotnet pack NBIoT
+cd NBIoT/NBIoT/bin/Debug
+dotnet nuget push TelenorNBIoT.VERSION.nupkg -k YOUR_API_KEY_HERE -s https://api.nuget.org/v3/index.json
+```
+
+Source:
+https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli

@@ -1,6 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <PackageId>TelenorNBIoT</PackageId>
+    <Version>0.1.0</Version>
+    <Title>Telenor NB-IoT client</Title>
+    <Authors>Exploratory Engineering</Authors>
+    <Company>Telenor Digital</Company>
+    <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageProjectUrl>https://nbiot.engineering/</PackageProjectUrl>
+    <PackageTags>Internet-of-Things; IoT; NB-IoT</PackageTags>
+    <RepositoryUrl>https://github.com/telenordigital/nbiot-csharp/</RepositoryUrl>
+
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
