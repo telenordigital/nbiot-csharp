@@ -1,4 +1,6 @@
 # nbiot-csharp
+[![Travis-CI](https://api.travis-ci.com/telenordigital/nbiot-csharp.svg)](https://travis-ci.com/telenordigital/nbiot-csharp)
+
 NBIoT-CSharp provides a C# client for the REST API for Telenor NB-IoT.
 
 ## Configuration
