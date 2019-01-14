@@ -1,0 +1,12 @@
+language: csharp
+solution: NBIoT/NBIoT.sln
+os:
+  - linux
+  - osx
+mono: none
+dotnet: 2.2.102
+install:
+  - dotnet restore NBIoT
+script:
+  - dotnet build NBIoT
+  - dotnet test NBIoT/Tests/Tests.csproj
