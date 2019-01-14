@@ -3,6 +3,8 @@ solution: NBIoT/NBIoT.sln
 os:
   - linux
   - osx
+dist: xenial
+sudo: yes
 mono: none
 dotnet: 2.2.102
 install:

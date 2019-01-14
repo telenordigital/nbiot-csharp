@@ -32,7 +32,7 @@ namespace NBIoT
             var path = Path.Combine(home(), fileName);
             if (!File.Exists(path))
             {
-                throw new FileNotFoundException($"Telenor NB-IoT config file {path} not found.");
+                return (addr, token);
             }
 
             var lines = File.ReadAllLines(path);
