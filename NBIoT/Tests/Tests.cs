@@ -40,6 +40,16 @@ namespace Tests
 
                 x = await Assert.ThrowsAsync<ClientException>(() => client.DeleteTeamMember(team.ID, team.Members[0].UserID));
                 Assert.Equal(HttpStatusCode.Forbidden, x.Status);
+
+                Invite iv = await client.CreateInvite(team.ID);
+                try {
+                    Assert.Contains(iv, await client.GetInvites(team.ID));
+                    Assert.Equal(iv, await client.GetInvite(team.ID, iv.Code));
+                    x = await Assert.ThrowsAsync<ClientException>(() => client.AcceptInvite(iv.Code));
+                    Assert.Equal(HttpStatusCode.Conflict, x.Status);
+                } finally {
+                    await client.DeleteInvite(team.ID, iv.Code);
+                }
             } finally {
                 await client.DeleteTeam(team.ID);
             }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Net.Http;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
@@ -61,6 +62,23 @@ namespace NBIoT
         public string AvatarURL;
     }
 
+    [DataContract]
+    public struct Invite
+    {
+        [DataMember(Name = "code")]
+        public string Code;
+
+        [DataMember(Name = "createdAt")]
+        public long CreatedAt;
+    }
+
+    [DataContract]
+    struct InviteList
+    {
+        [DataMember(Name = "invites")]
+        public Invite[] Invites;
+    }
+
 
     public partial class Client
     {
@@ -99,6 +117,33 @@ namespace NBIoT
         public Task DeleteTeam(string id)
         {
             return delete("/teams/" + id);
+        }
+
+        public Task<Invite> GetInvite(string teamID, string code)
+        {
+            return get<Invite>($"/teams/{teamID}/invites/{code}");
+        }
+
+        public async Task<Invite[]> GetInvites(string teamID)
+        {
+            return (await get<InviteList>($"/teams/{teamID}/invites")).Invites;
+        }
+
+        public Task<Invite> CreateInvite(string teamID)
+        {
+            return create($"/teams/{teamID}/invites", new Invite());
+        }
+
+        public Task<Team> AcceptInvite(string code)
+        {
+            Invite invite = new Invite();
+            invite.Code = code;
+            return request<Invite, Team>(HttpMethod.Post, "/teams/accept", invite);
+        }
+
+        public Task DeleteInvite(string teamID, string code)
+        {
+            return delete($"/teams/{teamID}/invites/{code}");
         }
     }
 }

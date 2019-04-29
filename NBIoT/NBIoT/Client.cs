@@ -45,33 +45,40 @@ namespace NBIoT
         Task<T> get<T>(string path)
             where T : struct
         {
-            return request<T>(HttpMethod.Get, addr + path, null);
+            return request<T>(HttpMethod.Get, path, null);
         }
 
         Task<T> create<T>(string path, T x)
             where T : struct
         {
-            return request<T>(HttpMethod.Post, addr + path, x);
+            return request<T>(HttpMethod.Post, path, x);
         }
 
         Task<T> update<T>(string path, T x)
             where T : struct
         {
-            return request<T>(new HttpMethod("PATCH"), addr + path, x);
+            return request<T>(new HttpMethod("PATCH"), path, x);
         }
 
         async Task delete(string path)
         {
-            await request<int>(HttpMethod.Delete, addr + path, null);
+            await request<int>(HttpMethod.Delete, path, null);
         }
 
         async Task<T> request<T>(HttpMethod method, string path, T? x)
             where T : struct
         {
+            return await request<T, T>(method, path, x);
+        }
+
+        async Task<U> request<T, U>(HttpMethod method, string path, T? x)
+            where T : struct
+            where U : struct
+        {
             var settings = new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = true };
             var serializer = new DataContractJsonSerializer(typeof(T), settings);
 
-            var req = new HttpRequestMessage(method, path);
+            var req = new HttpRequestMessage(method, addr + path);
             req.Headers.Add("X-API-Token", token);
             if (x != null)
             {
@@ -89,10 +96,10 @@ namespace NBIoT
             }
             if (method == HttpMethod.Delete)
             {
-                return new T();
+                return new U();
             }
             var stream = await resp.Content.ReadAsStreamAsync();
-            return (T)serializer.ReadObject(stream);
+            return (U)serializer.ReadObject(stream);
         }
     }
 
