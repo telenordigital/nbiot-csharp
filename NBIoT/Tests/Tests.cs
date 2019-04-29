@@ -158,6 +158,9 @@ namespace Tests
 
                     var output2 = (IFTTTOutput)await client.Output(collection.ID, output.ID);
                     Assert.Equal(output.ID, output2.ID);
+
+                    await client.OutputLogs(collection.ID, output.ID);
+                    await client.OutputStatus(collection.ID, output.ID);
                 } finally {
                     await client.DeleteOutput(collection.ID, output.ID);
                 }

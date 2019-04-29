@@ -79,6 +79,16 @@ namespace NBIoT
             return (await update($"/collections/{collectionID}/outputs/{o.ID}", o)).toOutput();
         }
 
+        public async Task<OutputLogEntry[]> OutputLogs(string collectionID, string outputID)
+        {
+            return (await get<OutputLogEntryList>($"/collections/{collectionID}/outputs/{outputID}/logs")).Logs;
+        }
+
+        public Task<OutputStatus> OutputStatus(string collectionID, string outputID)
+        {
+            return get<OutputStatus>($"/collections/{collectionID}/outputs/{outputID}/logs");
+        }
+
         public Task DeleteOutputTag(string collectionID, string outputID, string key)
         {
             return delete($"/collections/{collectionID}/outputs/{outputID}/tags/{key}");
@@ -277,5 +287,41 @@ namespace NBIoT
     {
         [DataMember(Name = "outputs")]
         public RawOutput[] Outputs;
+    }
+
+    [DataContract]
+    public struct OutputLogEntry
+    {
+        [DataMember(Name = "message")]
+        public string Message;
+
+        [DataMember(Name = "timestamp")]
+        public long Timestamp;
+
+        [DataMember(Name = "repeated")]
+        public int Repeated;
+    }
+
+    [DataContract]
+    struct OutputLogEntryList
+    {
+        [DataMember(Name = "logs")]
+        public OutputLogEntry[] Logs;
+    }
+
+    [DataContract]
+    public struct OutputStatus
+    {
+        [DataMember(Name = "errorCount")]
+        public int ErrorCount;
+
+        [DataMember(Name = "forwarded")]
+        public int Forwarded;
+
+        [DataMember(Name = "received")]
+        public int Received;
+
+        [DataMember(Name = "retries")]
+        public int Retries;
     }
 }
