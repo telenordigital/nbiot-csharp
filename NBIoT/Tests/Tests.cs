@@ -10,9 +10,10 @@ namespace Tests
     public class Tests
     {
         [Fact]
-        public void TestClient()
+        public async void TestClient()
         {
-            var _ = new Client();
+            var client = new Client();
+            await client.SystemDefaults();
         }
 
         [Fact]

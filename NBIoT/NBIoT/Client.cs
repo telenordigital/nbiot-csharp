@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 
@@ -102,6 +103,20 @@ namespace NBIoT
             var stream = await resp.Content.ReadAsStreamAsync();
             return (U)serializer.ReadObject(stream);
         }
+
+        public Task<SystemDefaults> SystemDefaults() {
+            return get<SystemDefaults>("/system");
+        }
+    }
+
+    [DataContract]
+    public struct SystemDefaults
+    {
+        [DataMember(Name = "defaultFieldMask")]
+        public FieldMask DefaultFieldMask;
+
+        [DataMember(Name = "forcedFieldMask")]
+        public FieldMask ForcedFieldMask;
     }
 
     public class ClientException : Exception

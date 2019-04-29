@@ -13,8 +13,27 @@ namespace NBIoT
         [DataMember(Name = "teamId")]
         public string TeamID;
 
+        [DataMember(Name = "fieldMask")]
+        public FieldMask FieldMask;
+
         [DataMember(Name = "tags")]
         public Dictionary<string, string> Tags;
+    }
+
+    [DataContract]
+    public struct FieldMask
+    {
+        [DataMember(Name = "imsi")]
+        public bool? IMSI;
+
+        [DataMember(Name = "imei")]
+        public bool? IMEI;
+
+        [DataMember(Name = "location")]
+        public bool? Location;
+
+        [DataMember(Name = "msisdn")]
+        public bool? MSISDN;
     }
 
     [DataContract]
