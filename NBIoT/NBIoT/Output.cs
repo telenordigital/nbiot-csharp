@@ -16,6 +16,8 @@ namespace NBIoT
         public string BasicAuthPass;
         public string CustomHeaderName;
         public string CustomHeaderValue;
+        public bool Disabled;
+        public Dictionary<string, string> Tags;
     }
 
     public struct MQTTOutput : IOutput
@@ -28,6 +30,8 @@ namespace NBIoT
         public string Password;
         public string ClientID;
         public string TopicName;
+        public bool Disabled;
+        public Dictionary<string, string> Tags;
     }
 
     public struct IFTTTOutput : IOutput
@@ -37,6 +41,8 @@ namespace NBIoT
         public string Key;
         public string EventName;
         public bool AsIsPayload;
+        public bool Disabled;
+        public Dictionary<string, string> Tags;
     }
 
     public struct UDPOutput : IOutput
@@ -45,6 +51,8 @@ namespace NBIoT
         public string CollectionID;
         public string Host;
         public int Port;
+        public bool Disabled;
+        public Dictionary<string, string> Tags;
     }
 
     public partial class Client
@@ -97,6 +105,12 @@ namespace NBIoT
         [DataMember(Name = "config")]
         public Dictionary<string, object> Config;
 
+        [DataMember(Name = "enabled")]
+        public bool Enabled;
+
+        [DataMember(Name = "tags")]
+        public Dictionary<string, string> Tags;
+
         internal RawOutput(IOutput output)
         {
             {
@@ -113,6 +127,8 @@ namespace NBIoT
                         ["customHeaderName"] = o.CustomHeaderName,
                         ["customHeaderValue"] = o.CustomHeaderValue,
                     };
+                    Enabled = !o.Disabled;
+                    Tags = o.Tags;
                     return;
                 }
             }
@@ -131,6 +147,8 @@ namespace NBIoT
                         ["clientId"] = o.ClientID,
                         ["topicName"] = o.TopicName,
                     };
+                    Enabled = !o.Disabled;
+                    Tags = o.Tags;
                     return;
                 }
             }
@@ -146,6 +164,8 @@ namespace NBIoT
                         ["eventName"] = o.EventName,
                         ["asIsPayload"] = o.AsIsPayload,
                     };
+                    Enabled = !o.Disabled;
+                    Tags = o.Tags;
                     return;
                 }
             }
@@ -160,6 +180,8 @@ namespace NBIoT
                         ["host"] = o.Host,
                         ["port"] = o.Port,
                     };
+                    Enabled = !o.Disabled;
+                    Tags = o.Tags;
                     return;
                 }
             }
@@ -180,6 +202,8 @@ namespace NBIoT
                         BasicAuthPass = str("basicAuthPass"),
                         CustomHeaderName = str("customHeaderName"),
                         CustomHeaderValue = str("customHeaderValue"),
+                        Disabled = !Enabled,
+                        Tags = Tags,
                     };
                 case "mqtt":
                     return new MQTTOutput
@@ -192,6 +216,8 @@ namespace NBIoT
                         Password = str("password"),
                         ClientID = str("clientId"),
                         TopicName = str("topicName"),
+                        Disabled = !Enabled,
+                        Tags = Tags,
                     };
                 case "ifttt":
                     return new IFTTTOutput
@@ -201,6 +227,8 @@ namespace NBIoT
                         Key = str("key"),
                         EventName = str("eventName"),
                         AsIsPayload = boolean("asIsPayload"),
+                        Disabled = !Enabled,
+                        Tags = Tags,
                     };
                 case "udp":
                     return new UDPOutput
@@ -209,6 +237,8 @@ namespace NBIoT
                         CollectionID = CollectionID,
                         Host = str("host"),
                         Port = integer("port"),
+                        Disabled = !Enabled,
+                        Tags = Tags,
                     };
             }
             return null;

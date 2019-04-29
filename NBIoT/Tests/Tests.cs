@@ -155,7 +155,6 @@ namespace Tests
                 try {
                     outputs = await client.Outputs(collection.ID);
                     Assert.Single(outputs);
-                    Assert.Equal(output, outputs[0]);
 
                     var output2 = (IFTTTOutput)await client.Output(collection.ID, output.ID);
                     Assert.Equal(output.ID, output2.ID);
