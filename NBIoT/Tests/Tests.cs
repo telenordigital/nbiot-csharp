@@ -76,6 +76,8 @@ namespace Tests
 
                 var collection2 = await client.Collection(collection.ID);
                 Assert.Equal(collection.ID, collection2.ID);
+
+                await client.Data(collection.ID, null, null, 100);
             } finally {
                 await client.DeleteCollection(collection.ID);
             }
@@ -114,6 +116,8 @@ namespace Tests
 
                     var device2 = await client.Device(collection.ID, device.ID);
                     Assert.Equal(device.ID, device2.ID);
+
+                    await client.Data(collection.ID, device.ID, null, null, 100);
                 } finally {
                     await client.DeleteDevice(collection.ID, device.ID);
                 }
