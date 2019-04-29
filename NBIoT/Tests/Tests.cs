@@ -21,7 +21,7 @@ namespace Tests
 
             var team = await client.CreateTeam(new Team());
             try {
-                var teams = await client.GetTeams();
+                var teams = await client.Teams();
                 Assert.Equal(team.ID, Array.Find(teams, t => t.ID == team.ID).ID);
 
                 var tagKey = "test key";
@@ -32,7 +32,7 @@ namespace Tests
                 Assert.NotNull(team.Tags);
                 Assert.Equal(tagValue, team.Tags[tagKey]);
 
-                var team2 = await client.GetTeam(team.ID);
+                var team2 = await client.Team(team.ID);
                 Assert.Equal(team.ID, team2.ID);
 
                 ClientException x = await Assert.ThrowsAsync<ClientException>(() => client.UpdateTeamMemberRole(team.ID, team.Members[0].UserID, "member"));
@@ -43,8 +43,8 @@ namespace Tests
 
                 Invite iv = await client.CreateInvite(team.ID);
                 try {
-                    Assert.Contains(iv, await client.GetInvites(team.ID));
-                    Assert.Equal(iv, await client.GetInvite(team.ID, iv.Code));
+                    Assert.Contains(iv, await client.Invites(team.ID));
+                    Assert.Equal(iv, await client.Invite(team.ID, iv.Code));
                     x = await Assert.ThrowsAsync<ClientException>(() => client.AcceptInvite(iv.Code));
                     Assert.Equal(HttpStatusCode.Conflict, x.Status);
                 } finally {
@@ -63,7 +63,7 @@ namespace Tests
 
             var collection = await client.CreateCollection(new Collection());
             try {
-                var collections = await client.GetCollections();
+                var collections = await client.Collections();
                 Assert.Equal(collection.ID, Array.Find(collections, t => t.ID == collection.ID).ID);
 
                 var tagKey = "test key";
@@ -74,7 +74,7 @@ namespace Tests
                 Assert.NotNull(collection.Tags);
                 Assert.Equal(tagValue, collection.Tags[tagKey]);
 
-                var collection2 = await client.GetCollection(collection.ID);
+                var collection2 = await client.Collection(collection.ID);
                 Assert.Equal(collection.ID, collection2.ID);
             } finally {
                 await client.DeleteCollection(collection.ID);
@@ -89,12 +89,12 @@ namespace Tests
             var collection = await client.CreateCollection(new Collection());
 
             try {
-                var devices = await client.GetDevices(collection.ID);
+                var devices = await client.Devices(collection.ID);
                 Assert.Empty(devices);
 
                 var device = await client.CreateDevice(collection.ID, new Device { IMEI = "12", IMSI = "34" });
                 try {
-                    devices = await client.GetDevices(collection.ID);
+                    devices = await client.Devices(collection.ID);
                     Assert.Single(devices);
                     Assert.Equal(device, devices[0]);
 
@@ -112,13 +112,13 @@ namespace Tests
                     Assert.Equal(imsi, device.IMSI);
                     Assert.Equal(tagValue, device.Tags[tagKey]);
 
-                    var device2 = await client.GetDevice(collection.ID, device.ID);
+                    var device2 = await client.Device(collection.ID, device.ID);
                     Assert.Equal(device.ID, device2.ID);
                 } finally {
                     await client.DeleteDevice(collection.ID, device.ID);
                 }
 
-                devices = await client.GetDevices(collection.ID);
+                devices = await client.Devices(collection.ID);
                 Assert.Empty(devices);
             } finally {
                 await client.DeleteCollection(collection.ID);
@@ -133,22 +133,22 @@ namespace Tests
             var collection = await client.CreateCollection(new Collection());
 
             try {
-                var outputs = await client.GetOutputs(collection.ID);
+                var outputs = await client.Outputs(collection.ID);
                 Assert.Empty(outputs);
 
                 var output = (IFTTTOutput)await client.CreateOutput(collection.ID, new IFTTTOutput { Key = "abc", EventName = "def" });
                 try {
-                    outputs = await client.GetOutputs(collection.ID);
+                    outputs = await client.Outputs(collection.ID);
                     Assert.Single(outputs);
                     Assert.Equal(output, outputs[0]);
 
-                    var output2 = (IFTTTOutput)await client.GetOutput(collection.ID, output.ID);
+                    var output2 = (IFTTTOutput)await client.Output(collection.ID, output.ID);
                     Assert.Equal(output.ID, output2.ID);
                 } finally {
                     await client.DeleteOutput(collection.ID, output.ID);
                 }
 
-                outputs = await client.GetOutputs(collection.ID);
+                outputs = await client.Outputs(collection.ID);
                 Assert.Empty(outputs);
             } finally {
                 await client.DeleteCollection(collection.ID);

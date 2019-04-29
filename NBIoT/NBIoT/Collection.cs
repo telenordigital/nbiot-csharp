@@ -26,12 +26,12 @@ namespace NBIoT
 
     public partial class Client
     {
-        public Task<Collection> GetCollection(string id)
+        public Task<Collection> Collection(string id)
         {
             return get<Collection>("/collections/" + id);
         }
 
-        public async Task<Collection[]> GetCollections()
+        public async Task<Collection[]> Collections()
         {
             return (await get<CollectionList>("/collections")).Collections;
         }

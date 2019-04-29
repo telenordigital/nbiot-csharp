@@ -32,12 +32,12 @@ namespace NBIoT
 
     public partial class Client
     {
-        public Task<Device> GetDevice(string collectionID, string deviceID)
+        public Task<Device> Device(string collectionID, string deviceID)
         {
             return get<Device>($"/collections/{collectionID}/devices/{deviceID}");
         }
 
-        public async Task<Device[]> GetDevices(string collectionID)
+        public async Task<Device[]> Devices(string collectionID)
         {
             return (await get<DeviceList>($"/collections/{collectionID}/devices")).Devices;
         }

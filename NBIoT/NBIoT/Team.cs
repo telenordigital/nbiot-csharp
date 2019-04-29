@@ -82,12 +82,12 @@ namespace NBIoT
 
     public partial class Client
     {
-        public Task<Team> GetTeam(string id)
+        public Task<Team> Team(string id)
         {
             return get<Team>("/teams/" + id);
         }
 
-        public async Task<Team[]> GetTeams()
+        public async Task<Team[]> Teams()
         {
             return (await get<TeamList>("/teams")).Teams;
         }
@@ -119,12 +119,12 @@ namespace NBIoT
             return delete("/teams/" + id);
         }
 
-        public Task<Invite> GetInvite(string teamID, string code)
+        public Task<Invite> Invite(string teamID, string code)
         {
             return get<Invite>($"/teams/{teamID}/invites/{code}");
         }
 
-        public async Task<Invite[]> GetInvites(string teamID)
+        public async Task<Invite[]> Invites(string teamID)
         {
             return (await get<InviteList>($"/teams/{teamID}/invites")).Invites;
         }

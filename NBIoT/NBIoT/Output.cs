@@ -41,12 +41,12 @@ namespace NBIoT
 
     public partial class Client
     {
-        public async Task<IOutput> GetOutput(string collectionID, string outputID)
+        public async Task<IOutput> Output(string collectionID, string outputID)
         {
             return (await get<RawOutput>($"/collections/{collectionID}/outputs/{outputID}")).toOutput();
         }
 
-        public async Task<IOutput[]> GetOutputs(string collectionID)
+        public async Task<IOutput[]> Outputs(string collectionID)
         {
             return (await get<OutputList>($"/collections/{collectionID}/outputs")).Outputs.Select(o => o.toOutput()).ToArray();
         }
