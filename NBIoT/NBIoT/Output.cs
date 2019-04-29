@@ -39,6 +39,14 @@ namespace NBIoT
         public bool AsIsPayload;
     }
 
+    public struct UDPOutput : IOutput
+    {
+        public string ID;
+        public string CollectionID;
+        public string Host;
+        public int Port;
+    }
+
     public partial class Client
     {
         public async Task<IOutput> Output(string collectionID, string outputID)
@@ -141,6 +149,20 @@ namespace NBIoT
                     return;
                 }
             }
+            {
+                if (output is UDPOutput o)
+                {
+                    ID = o.ID;
+                    CollectionID = o.CollectionID;
+                    Type = "udp";
+                    Config = new Dictionary<string, object>()
+                    {
+                        ["host"] = o.Host,
+                        ["port"] = o.Port,
+                    };
+                    return;
+                }
+            }
             throw new System.Exception("unknown output type");
         }
 
@@ -180,6 +202,14 @@ namespace NBIoT
                         EventName = str("eventName"),
                         AsIsPayload = boolean("asIsPayload"),
                     };
+                case "udp":
+                    return new UDPOutput
+                    {
+                        ID = ID,
+                        CollectionID = CollectionID,
+                        Host = str("host"),
+                        Port = integer("port"),
+                    };
             }
             return null;
         }
@@ -191,6 +221,15 @@ namespace NBIoT
                 return s;
             }
             return "";
+        }
+
+        int integer(string key)
+        {
+            if (Config.ContainsKey(key) && Config[key] is int i)
+            {
+                return i;
+            }
+            return 0;
         }
 
         bool boolean(string key)

@@ -104,9 +104,7 @@ namespace NBIoT
 
         public Task<Member> UpdateTeamMemberRole(string teamID, string userID, string role)
         {
-            Member m = new Member();
-            m.Role = role;
-            return update($"/teams/{teamID}/members/{userID}", m);
+            return update($"/teams/{teamID}/members/{userID}", new Member{Role = role});
         }
 
         public Task DeleteTeamMember(string teamID, string userID)
@@ -141,9 +139,7 @@ namespace NBIoT
 
         public Task<Team> AcceptInvite(string code)
         {
-            Invite invite = new Invite();
-            invite.Code = code;
-            return request<Invite, Team>(HttpMethod.Post, "/teams/accept", invite);
+            return request<Invite, Team>(HttpMethod.Post, "/teams/accept", new Invite{Code = code});
         }
 
         public Task DeleteInvite(string teamID, string code)
