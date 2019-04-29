@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using NBIoT;
 using Xunit;
 
@@ -33,6 +34,12 @@ namespace Tests
 
                 var team2 = await client.GetTeam(team.ID);
                 Assert.Equal(team.ID, team2.ID);
+
+                ClientException x = await Assert.ThrowsAsync<ClientException>(() => client.UpdateTeamMemberRole(team.ID, team.Members[0].UserID, "member"));
+                Assert.Equal(HttpStatusCode.Forbidden, x.Status);
+
+                x = await Assert.ThrowsAsync<ClientException>(() => client.DeleteTeamMember(team.ID, team.Members[0].UserID));
+                Assert.Equal(HttpStatusCode.Forbidden, x.Status);
             } finally {
                 await client.DeleteTeam(team.ID);
             }

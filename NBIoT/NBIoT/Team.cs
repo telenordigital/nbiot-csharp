@@ -32,7 +32,35 @@ namespace NBIoT
 
         [DataMember(Name = "role")]
         public string Role;
+
+        [DataMember(Name = "name")]
+        public string Name;
+        
+        [DataMember(Name = "email")]
+        public string Email;
+        
+        [DataMember(Name = "phone")]
+        public string Phone;
+        
+        [DataMember(Name = "verifiedEmail")]
+        public bool VerifiedEmail;
+        
+        [DataMember(Name = "verifiedPhone")]
+        public bool VerifiedPhone;
+        
+        [DataMember(Name = "connectId")]
+        public string ConnectID;
+        
+        [DataMember(Name = "gitHubLogin")]
+        public string GitHubLogin;
+        
+        [DataMember(Name = "authType")]
+        public string AuthType;
+        
+        [DataMember(Name = "avatarUrl")]
+        public string AvatarURL;
     }
+
 
     public partial class Client
     {
@@ -54,6 +82,18 @@ namespace NBIoT
         public Task<Team> UpdateTeam(Team team)
         {
             return update("/teams/" + team.ID, team);
+        }
+
+        public Task<Member> UpdateTeamMemberRole(string teamID, string userID, string role)
+        {
+            Member m = new Member();
+            m.Role = role;
+            return update($"/teams/{teamID}/members/{userID}", m);
+        }
+
+        public Task DeleteTeamMember(string teamID, string userID)
+        {
+            return delete($"/teams/{teamID}/members/{userID}");
         }
 
         public Task DeleteTeam(string id)

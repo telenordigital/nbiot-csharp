@@ -98,7 +98,7 @@ namespace NBIoT
 
     public class ClientException : Exception
     {
-        HttpStatusCode Status { get; set; }
+        public HttpStatusCode Status { get; set; }
 
         public ClientException(HttpStatusCode status, string message)
             : base(message)
