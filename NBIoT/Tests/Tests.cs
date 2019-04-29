@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using NBIoT;
 using Xunit;
 
@@ -118,6 +119,15 @@ namespace Tests
                     Assert.Equal(device.ID, device2.ID);
 
                     await client.Data(collection.ID, device.ID, null, null, 100);
+
+                    ClientException x = await Assert.ThrowsAsync<ClientException>(() => client.Send(collection.ID, device.ID, new DownstreamMessage(1234, Encoding.ASCII.GetBytes("Hello, device!"))));
+                    Assert.Equal(HttpStatusCode.Conflict, x.Status);
+
+                    // The broadcast test is slow because it waits for a timeout, so we only run it during continuous integration.
+                    if (Environment.GetEnvironmentVariable("CI") == "true") {
+                        BroadcastResult res = await client.Broadcast(collection.ID, new DownstreamMessage(1234, Encoding.ASCII.GetBytes("Hello, devices!")));
+                        Assert.Equal(1, res.Failed);
+                    }
                 } finally {
                     await client.DeleteDevice(collection.ID, device.ID);
                 }

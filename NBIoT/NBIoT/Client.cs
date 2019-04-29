@@ -76,14 +76,14 @@ namespace NBIoT
             where U : struct
         {
             var settings = new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = true };
-            var serializer = new DataContractJsonSerializer(typeof(T), settings);
 
             var req = new HttpRequestMessage(method, addr + path);
             req.Headers.Add("X-API-Token", token);
             if (x != null)
             {
+                var serializer1 = new DataContractJsonSerializer(typeof(T), settings);
                 var stream1 = new MemoryStream();
-                serializer.WriteObject(stream1, x);
+                serializer1.WriteObject(stream1, x);
                 stream1.Position = 0;
                 req.Content = new StreamContent(stream1);
                 req.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -94,10 +94,11 @@ namespace NBIoT
             {
                 throw new ClientException(resp.StatusCode, await resp.Content.ReadAsStringAsync());
             }
-            if (method == HttpMethod.Delete)
+            if (typeof(U) == typeof(int))
             {
                 return new U();
             }
+            var serializer = new DataContractJsonSerializer(typeof(U), settings);
             var stream = await resp.Content.ReadAsStreamAsync();
             return (U)serializer.ReadObject(stream);
         }
