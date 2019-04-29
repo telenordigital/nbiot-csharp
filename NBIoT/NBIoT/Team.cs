@@ -114,6 +114,11 @@ namespace NBIoT
             return delete($"/teams/{teamID}/members/{userID}");
         }
 
+        public Task DeleteTeamTag(string teamID, string key)
+        {
+            return delete($"/teams/{teamID}/tags/{key}");
+        }
+
         public Task DeleteTeam(string id)
         {
             return delete("/teams/" + id);

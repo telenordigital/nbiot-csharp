@@ -30,6 +30,10 @@ accepts the address and token directly.
 Support for receiving device-sent data via WebSockets is not yet implemented.
 We are open to recommendations for functioning cross-platform WebSocket libraries.
 
+## Updating resources
+
+The various `Client.Update*` methods work via HTTP PATCH, which means they will only modify or set fields, not delete them.  There are special `Client.Delete*Tag` methods for deleting tags.
+
 ## Deployment
 
 To build and release the package to NuGet, you will need the .NET Core SDK, which includes the `dotnet` CLI.

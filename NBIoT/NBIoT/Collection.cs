@@ -46,6 +46,11 @@ namespace NBIoT
             return update("/collections/" + collection.ID, collection);
         }
 
+        public Task DeleteCollectionTag(string collectionID, string key)
+        {
+            return delete($"/collections/{collectionID}/tags/{key}");
+        }
+
         public Task DeleteCollection(string id)
         {
             return delete("/collections/" + id);

@@ -52,6 +52,11 @@ namespace NBIoT
             return update($"/collections/{collectionID}/devices/{device.ID}", device);
         }
 
+        public Task DeleteDeviceTag(string collectionID, string deviceID, string key)
+        {
+            return delete($"/collections/{collectionID}/devices/{deviceID}/tags/{key}");
+        }
+
         public Task DeleteDevice(string collectionID, string deviceID)
         {
             return delete($"/collections/{collectionID}/devices/{deviceID}");

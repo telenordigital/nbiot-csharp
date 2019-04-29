@@ -63,6 +63,11 @@ namespace NBIoT
             return (await update($"/collections/{collectionID}/outputs/{o.ID}", o)).toOutput();
         }
 
+        public Task DeleteOutputTag(string collectionID, string outputID, string key)
+        {
+            return delete($"/collections/{collectionID}/outputs/{outputID}/tags/{key}");
+        }
+
         public Task DeleteOutput(string collectionID, string outputID)
         {
             return delete($"/collections/{collectionID}/outputs/{outputID}");
