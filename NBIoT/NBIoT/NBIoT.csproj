@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>TelenorNBIoT</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Title>Telenor NB-IoT client</Title>
     <Authors>Exploratory Engineering</Authors>
     <Company>Telenor Digital</Company>
